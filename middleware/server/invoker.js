@@ -1,5 +1,4 @@
-const Marshaller = require("../marshaller");
-const ServerRequestHandler = require("../server/srh/tcp");
+const ServerRequestHandler = require("../server/srh/http");
 
 class Invoker {
     constructor(service) {

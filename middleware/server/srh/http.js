@@ -1,12 +1,11 @@
 const http = require('http');
 const Invoker = require('../invoker');
+const Marshaller = require('../../marshaller');
 
-console.log(Invoker);
 
 class ServerRequestHandlerHTTP {
   constructor(service) {
     this.service = service;
-    this.invoker = new Invoker(this.service);
   }
 
   receive() {
@@ -21,13 +20,16 @@ class ServerRequestHandlerHTTP {
         console.log("Requisição recebida:", body);
 
         // Processa a requisição com o Invoker
-        const result = this.invoker.handleRequest(body);
+        const marshaller = new Marshaller();
+        const { method, args } = marshaller.unmarshal(body);
+        const result = this.service[method](...args);
+        const response = JSON.stringify(result);
 
         // Responde ao cliente em JSON
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(result));
+        res.end(JSON.stringify(response));
 
-        console.log("Resposta enviada:", result);
+        console.log("Resposta enviada:", response);
       });
 
       req.on('error', (err) => {
