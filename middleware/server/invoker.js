@@ -1,15 +1,16 @@
 const Marshaller = require("../marshaller");
+const ServerRequestHandler = require("../server/srh/tcp");
+
 class Invoker {
     constructor(service) {
       this.service = service;
     }
-  
-    handleRequest(request) {
-      console.log("INVOKER" + request)
-      const marshaller = new Marshaller();
-      const { method, args } = marshaller.unmarshal(request);
-      return this.service[method](...args);
+    
+    run(){
+      const serverRequestHandler = new ServerRequestHandler(this.service);
+      serverRequestHandler.receive();
     }
   }
 
   module.exports = Invoker;
+  

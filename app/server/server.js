@@ -1,5 +1,4 @@
 const Invoker  = require("../../middleware/server/invoker");
-const ServerRequestHandler = require("../../middleware/server/srh/http");
 const fs = require('fs');
 const path = require('path');
 
@@ -82,7 +81,6 @@ function criarArquivoSync(nomeArquivo, conteudo) {
   };
   
   const invoker = new Invoker(service);
-  const serverRequestHandler = new ServerRequestHandler(invoker);
-  serverRequestHandler.receive();
+  invoker.run();
     
     

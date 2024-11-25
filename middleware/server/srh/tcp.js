@@ -1,9 +1,16 @@
 const net = require('net');
+const Marshaller = require('../../marshaller');
 
 class ServerRequestHandlerTCP {
-  constructor(invoker) {
-    this.invoker = invoker;
+  constructor(service) {
+    this.service = service;
   }
+ // handleRequest(request) {
+ //   console.log("INVOKER" + request)
+ //   const marshaller = new Marshaller();
+  //  const { method, args } = marshaller.unmarshal(request);
+   // return this.service[method](...args);
+  //}
 
   handle(data, socket) {
     // Converte os dados recebidos em string
@@ -11,7 +18,10 @@ class ServerRequestHandlerTCP {
     console.log("SRH: " + request);
 
     // Processa a requisição via Invoker
-    const result = this.invoker.handleRequest(request);
+    //const result = handleRequest(request);
+    const marshaller = new Marshaller();
+    const { method, args } = marshaller.unmarshal(request);
+    const result = this.service[method](...args);
     const response = JSON.stringify(result);
 
     // Envia a resposta para o cliente

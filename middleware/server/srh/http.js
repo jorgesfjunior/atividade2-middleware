@@ -1,9 +1,12 @@
 const http = require('http');
 const Invoker = require('../invoker');
 
+console.log(Invoker);
+
 class ServerRequestHandlerHTTP {
-  constructor(invoker) {
-    this.invoker = invoker;
+  constructor(service) {
+    this.service = service;
+    this.invoker = new Invoker(this.service);
   }
 
   receive() {

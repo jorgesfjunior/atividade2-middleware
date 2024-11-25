@@ -1,5 +1,5 @@
 const Marshaller = require("../marshaller");
-const ClientRequestHandler = require("./crh/http");
+const ClientRequestHandler = require("./crh/tcp");
 
 class Requestor {
     constructor() {
