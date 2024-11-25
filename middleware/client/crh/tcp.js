@@ -9,6 +9,7 @@ class ClientRequestHandler {
 
   send(request) {
     const startTime = Date.now(); 
+    
     async function adicionarTextoNoArquivo(nomeArquivo, conteudoNovo) {
       try {
         // Adiciona uma nova linha seguida pelo novo conteúdo

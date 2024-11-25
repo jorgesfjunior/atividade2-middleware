@@ -1,6 +1,5 @@
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
-const Invoker = require('../invoker');
 
 class ServerRequestHandler {
   constructor(invoker) {

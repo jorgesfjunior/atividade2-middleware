@@ -1,5 +1,5 @@
 const Invoker  = require("../../middleware/server/invoker");
-const ServerRequestHandler = require("../../middleware/server/srh/udp");
+const ServerRequestHandler = require("../../middleware/server/srh/http");
 const fs = require('fs');
 const path = require('path');
 

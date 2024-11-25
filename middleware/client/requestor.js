@@ -1,5 +1,5 @@
 const Marshaller = require("../marshaller");
-const ClientRequestHandler = require("./crh/udp");
+const ClientRequestHandler = require("./crh/http");
 
 class Requestor {
     constructor() {
