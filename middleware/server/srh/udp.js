@@ -2,8 +2,9 @@ const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
 const Marshaller = require('../../marshaller');
 class ServerRequestHandler {
-  constructor(service) {
-    this.service = service;
+  constructor(handleRequest) {
+    //this.service = service;
+    this.handleRequest = handleRequest; 
   }
 
   handle(data, rinfo, server) {
@@ -13,10 +14,12 @@ class ServerRequestHandler {
     console.log("Cliente IP: " + rinfo.address + ", Porta: " + rinfo.port);
 
     // Processa a requisição via Invoker
-    const marshaller = new Marshaller();
-    const { method, args } = marshaller.unmarshal(request);
-    const result = this.service[method](...args);
-    const response = Buffer.from(JSON.stringify(result)); // UDP espera um Buffer para enviar
+    //const marshaller = new Marshaller();
+    //const { method, args } = marshaller.unmarshal(request);
+    //const result = this.service[method](...args);
+    //const response = Buffer.from(JSON.stringify(result)); // UDP espera um Buffer para enviar
+    const result = this.handleRequest(request);
+    const response = Buffer.from(JSON.stringify(result)); 
 
     server.send(response, 0, response.length, rinfo.port, rinfo.address, (err) => {
       if (err) {

@@ -6,11 +6,6 @@ class ClientRequestHandler {
     this.serverPort = serverPort;
   }
 
-  /**
-   * Envia uma requisição HTTP para o servidor.
-   * @param {string} request - A string representando a requisição que será enviada.
-   * @returns {Promise<string>} - Uma Promise com a resposta do servidor.
-   */
   send(request) {
     return new Promise((resolve, reject) => {
       const options = {

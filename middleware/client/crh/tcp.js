@@ -36,7 +36,7 @@ class ClientRequestHandler {
         adicionarTextoNoArquivo('experiment.txt', duration);
         console.log('Resposta do servidor:', data.toString());
         resolve(data.toString());
-        //client.destroy(); // Fecha a conexão
+        client.destroy(); // Fecha a conexão
       });
 
       client.on('error', (err) => {
