@@ -1,4 +1,5 @@
 const Invoker  = require("../../middleware/server/invoker");
+const ClientProxy = require("../../middleware/server/clientProxy");
 const fs = require('fs');
 const path = require('path');
 
@@ -79,8 +80,13 @@ function criarArquivoSync(nomeArquivo, conteudo) {
     deleteFile: (a) => excluirArquivo(a),
     attFile: (a,b) => atualizarConteudoArquivo(a,b)
   };
+
+  const clientProxy = new ClientProxy();
+  clientProxy.register('filesystem','localhost:3000');  
   
   const invoker = new Invoker(service);
   invoker.run();
+
+
     
     

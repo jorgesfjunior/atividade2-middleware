@@ -1,4 +1,4 @@
-const ServerRequestHandler = require("../server/srh/udp");
+const ServerRequestHandler = require("./srh/udp");
 const Marshaller = require("../marshaller");
 
 class Invoker {
@@ -14,11 +14,8 @@ class Invoker {
     }
 
     run(){
-      //const serverRequestHandler = new ServerRequestHandler(this.service, this);
-      //serverRequestHandler.receive();
-      //console.log("INVOKER: Inicializando o ServerRequestHandler...");
+      console.log("INVOKER: Inicializando o ServerRequestHandler...");
 
-      // Instancia o ServerRequestHandler e passa o Invoker como referência
       const serverRequestHandler = new ServerRequestHandler(this.handleRequest.bind(this));
       serverRequestHandler.receive();
     }

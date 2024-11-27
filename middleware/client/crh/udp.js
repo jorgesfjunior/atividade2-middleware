@@ -3,7 +3,7 @@ const net = require('net');
 const fs = require('fs');
 
 class ClientRequestHandler {
-  constructor(serverHost = 'localhost', serverPort = 3000) {
+  constructor(serverHost, serverPort) {
     this.serverHost = serverHost;
     this.serverPort = serverPort;
     this.client = dgram.createSocket('udp4');
@@ -29,6 +29,10 @@ class ClientRequestHandler {
     return new Promise((resolve, reject) => {
       
       const message = Buffer.from(request);
+              // Bind o cliente a uma porta específica para escutar as respostas
+      this.client.bind(5000, () => {
+          console.log(`Cliente está escutando na porta ${5000}`);
+      });
 
       // Envia a mensagem para o servidor UDP
       this.client.send(message, this.serverPort, this.serverHost, (err) => {
