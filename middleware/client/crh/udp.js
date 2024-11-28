@@ -50,7 +50,7 @@ class ClientRequestHandler {
         const responseMessage = response.toString();
         adicionarTextoNoArquivo('experiment.txt', duration);
         resolve(JSON.parse(responseMessage));  // Deserializa a resposta
-        this.client.close();  // Fecha o socket depois de receber a resposta
+        //this.client.close();  // Fecha o socket depois de receber a resposta
       });
     });
   }

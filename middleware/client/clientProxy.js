@@ -10,9 +10,6 @@ class ClientProxy {
 
 
   createFile(...args){
-    console.log('createFile client proxy');
-    console.log(this.address)
-    console.log(this.port)
     const methodName = "createFile"
     return this.requestor.sendRequest(methodName, args);
   }

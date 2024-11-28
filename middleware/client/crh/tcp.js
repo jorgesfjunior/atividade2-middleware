@@ -2,41 +2,41 @@ const net = require('net');
 const fs = require('fs');
 
 class ClientRequestHandler {
-  constructor(serverHost = 'localhost', serverPort = 3000) { // Use a porta correta
+  constructor(serverHost, serverPort) {
     this.serverHost = serverHost;
     this.serverPort = serverPort;
   }
 
-  send(request) {
-    const startTime = Date.now(); 
-    
-    async function adicionarTextoNoArquivo(nomeArquivo, conteudoNovo) {
-      try {
-        // Adiciona uma nova linha seguida pelo novo conteúdo
-        await fs.promises.appendFile(nomeArquivo, `\n${conteudoNovo}`);
-        console.log(`Texto adicionado ao arquivo "${nomeArquivo}" com sucesso!`);
-        return "Conteúdo adicionado!";
-      } catch (err) {
-        console.error('Erro ao adicionar texto no arquivo:', err.message);
-        return "Erro ao adicionar conteúdo!";
-      }
+  async adicionarTextoNoArquivo(nomeArquivo, conteudoNovo) {
+    try {
+      await fs.promises.appendFile(nomeArquivo, `\n${conteudoNovo}`);
+      console.log(`Texto adicionado ao arquivo "${nomeArquivo}" com sucesso!`);
+    } catch (err) {
+      console.error('Erro ao adicionar texto no arquivo:', err.message);
     }
+  }
 
+  send(request) {
     return new Promise((resolve, reject) => {
       const client = new net.Socket();
+      const startTime = Date.now(); // Marca o início da operação
 
       client.connect(this.serverPort, this.serverHost, () => {
-        console.log('Conectado ao servidor');
+        console.log('Conexão estabelecida com o servidor.');
         client.write(request);
       });
 
-      client.on('data', (data) => {
-        const endTime = Date.now();  // Marca o fim ao receber a resposta
-        const duration = endTime - startTime;  // Calcula o tempo total em ms
-        adicionarTextoNoArquivo('experiment.txt', duration);
+      client.on('data', async (data) => {
+        const endTime = Date.now(); // Marca o fim ao receber a resposta
+        const duration = endTime - startTime; // Calcula o tempo total em ms
+
         console.log('Resposta do servidor:', data.toString());
-        resolve(data.toString());
-        client.destroy(); // Fecha a conexão
+
+        // Salva a duração da operação em um arquivo
+        await this.adicionarTextoNoArquivo('experiment.txt', duration);
+
+        resolve(JSON.parse(data.toString()));
+        client.end(); // Encerra a conexão após receber a resposta
       });
 
       client.on('error', (err) => {
@@ -45,7 +45,7 @@ class ClientRequestHandler {
       });
 
       client.on('close', () => {
-        console.log('Conexão fechada');
+        console.log('Conexão encerrada.');
       });
     });
   }

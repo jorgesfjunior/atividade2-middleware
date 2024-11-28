@@ -1,4 +1,4 @@
-const ServerRequestHandler = require("../server/srh/udp");
+const ServerRequestHandler = require("../server/srh/http");
 const Marshaller = require("../marshaller");
 
 class Invoker {

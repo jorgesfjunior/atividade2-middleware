@@ -1,4 +1,4 @@
-const ClientRequestHandler = require("./crh/udp");
+const ClientRequestHandler = require("./crh/http");
 const Marshaller = require('../marshaller');
 
 class ClientProxy {
